@@ -1,32 +1,32 @@
-let students = []
-const voldysArmy = []
+const students = [];
+const voldysArmy = [];
 const houses = [
   {
     house: 'gryffindor',
     crest:
-      'https://static.wikia.nocookie.net/pottermore/images/1/16/Gryffindor_crest.png'
+      'https://static.wikia.nocookie.net/pottermore/images/1/16/Gryffindor_crest.png',
   },
   {
     house: 'slytherin',
     crest:
-      'https://static.wikia.nocookie.net/pottermore/images/4/45/Slytherin_Crest.png'
+      'https://static.wikia.nocookie.net/pottermore/images/4/45/Slytherin_Crest.png',
   },
   {
     house: 'hufflepuff',
     crest:
-      'https://static.wikia.nocookie.net/pottermore/images/5/5e/Hufflepuff_crest.png'
+      'https://static.wikia.nocookie.net/pottermore/images/5/5e/Hufflepuff_crest.png',
   },
   {
     house: 'ravenclaw',
     crest:
-      'https://static.wikia.nocookie.net/pottermore/images/4/4f/Ravenclaw_crest.png'
-  }
-]
+      'https://static.wikia.nocookie.net/pottermore/images/4/4f/Ravenclaw_crest.png',
+  },
+];
 
 const renderToDOM = (divId, content) => {
   const selectedDiv = document.querySelector(divId);
   selectedDiv.innerHTML = content;
-}
+};
 
 const events = () => {
   // get form on the DOM on button click
@@ -37,15 +37,16 @@ const events = () => {
     studentAreas(); // students and voldy's army divs
   });
 
-
   // target expel buttons to move to voldys army
   document
     .querySelector('#student-container')
     .addEventListener('click', (e) => {
       if (e.target.id.includes('expel')) {
         const [, id] = e.target.id.split('--');
-        const index = students.findIndex(student => student.id === Number(id));
-        
+        const index = students.findIndex(
+          (student) => student.id === Number(id)
+        );
+
         // move from one array to another
         voldysArmy.push(...students.splice(index, 1));
         // get both sets of students on the DOM
@@ -53,21 +54,20 @@ const events = () => {
         studentsOnDom('#voldy', voldysArmy);
       }
     });
-  
 
   // target filter buttons on Dom
-  document.querySelector("#filter-container").addEventListener('click', (e) => {
-    if (e.target.id.includes("filter")) {
-      const [, house] = e.target.id.split("--");
+  document.querySelector('#filter-container').addEventListener('click', (e) => {
+    if (e.target.id.includes('filter')) {
+      const [, house] = e.target.id.split('--');
 
       if (house === 'all') {
-        studentsOnDom("#students", students);
+        studentsOnDom('#students', students);
       } else if (house) {
-        const filter = students.filter(student => student.house === house);
-        studentsOnDom("#students", filter, house);
+        const filter = students.filter((student) => student.house === house);
+        studentsOnDom('#students', filter, house);
       }
     }
-  })
+  });
 };
 
 // ********** HTML Components  ********** //
@@ -80,8 +80,8 @@ const htmlStructure = () => {
   <div id="student-container" class="container d-flex"></div>
   `;
 
-  renderToDOM("#app", domString);
-}
+  renderToDOM('#app', domString);
+};
 
 const header = () => {
   const domString = `<div class="container">
@@ -97,7 +97,7 @@ const header = () => {
 };
 
 const startSortingBtn = () => {
-  const domString = `<button type="button" class="btn btn-info" id="start-sorting">Start the Sorting Ceremony!</button>`;
+  const domString = `<button type='button' class='btn btn-info' id='start-sorting'>Start the Sorting Ceremony!</button>`;
 
   renderToDOM('#form-container', domString);
 };
@@ -109,7 +109,7 @@ const studentAreas = () => {
   renderToDOM('#student-container', domString);
 };
 
-const studentsOnDom = (divId, array, house = "Hogwarts") => {
+const studentsOnDom = (divId, array, house = 'Hogwarts') => {
   let domString = '';
   if (!array.length) {
     domString += `NO ${house.toUpperCase()} STUDENTS`;
@@ -119,26 +119,19 @@ const studentsOnDom = (divId, array, house = "Hogwarts") => {
     domString += `
     <div class="card bg-dark text-white">
       <img src="${
-        divId === '#voldy'
-          ? "https://carboncostume.com/wordpress/wp-content/uploads/2019/10/deatheater-harrypotter.jpg" : student.crest}" 
+  divId === '#voldy' ? 'https://carboncostume.com/wordpress/wp-content/uploads/2019/10/deatheater-harrypotter.jpg' : student.crest}" 
           class="card-img" alt="${student.house} crest">
       <div class="card-img-overlay">
         <h5 class="card-title">${student.name}</h5>
-        ${
-          divId === '#voldy'
-            ? `<p class="card-text">Death Eater</p>`
-            : ` <p class="card-text">${student.house}</p>
-          <button type="button" id="expel--${student.id}" class="btn btn-danger btn-sm">Expel</button>`
-        }
-      </div>
-    </div>
-    `;
-  });
+        ${divId} === '#voldy' ? '<p class= ${card-text} Death Eater' </p>' : '<p class="card-text">${student.house}</p>; <button type='button' id="expel--${student.id}" class="btn btn-danger btn-sm">Expel</button>`
+      
+  );
   renderToDOM(divId, domString);
 };
 
 const filterBtnRow = () => {
-  const domString = `<div class="btn-group" role="group" aria-label="Basic example">
+  let domString = '';
+      domString = `<div class="btn-group" role="group" aria-label="Basic example">
       <button type="button" id="filter--hufflepuff" class="btn btn-warning btn-sm">Hufflepuff</button>
       <button type="button" class="btn btn-primary btn-sm" id="filter--ravenclaw">Ravenclaw</button>
       <button type="button" class="btn btn-success btn-sm" id="filter--slytherin">Slytherin</button>
@@ -146,10 +139,10 @@ const filterBtnRow = () => {
       <button type="button" class="btn btn-secondary btn-sm" id="filter--all">All</button>
     </div>`;
 
-    renderToDOM("#filter-container", domString);
-}
+  renderToDOM('#filter-container", domString');
+};
 
-// add form to DOM on start-sorting click. 
+// add form to DOM on start-sorting click.
 // Add events for form after the form is on the DOM
 const form = () => {
   const domString = `<form id="sorting" class="d-flex flex-column form-floating ">
@@ -185,25 +178,26 @@ const sortStudent = (e) => {
       id: createId(students),
       name: student.value,
       house: sortingHat.house,
-      crest: sortingHat.crest
+      crest: sortingHat.crest,
     });
-    
+
     student.value = ''; // reset value of input
-    studentsOnDom('#students', students);
+    studentsOnDom("#students", students);
   }
 };
 
 // Create a new ID for the students
-const createId = array => {
+const createId = (array) => {
   if (array.length) {
-    const idArray = array.map(el => el.id);
+    const idArray = array.map((el) => el.id);
     return Math.max(...idArray) + 1;
   } else {
     return 0;
   }
-}
+};
 
 const startApp = () => {
+  form();
   htmlStructure(); // always load first
   header();
   startSortingBtn();
