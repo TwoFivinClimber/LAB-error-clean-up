@@ -1,3 +1,11 @@
+const students = [];
+const voldysArmy = [];
+
+const createId = (array) => {
+  const idArray = array.map((el) => el.id);
+  return Math.max(...idArray) + 1;
+};
+
 const houses = [
   {
     house: 'gryffindor',
@@ -21,4 +29,6 @@ const houses = [
   },
 ];
 
-export default houses;
+export {
+  houses, students, voldysArmy, createId
+};
